@@ -1,0 +1,10 @@
+﻿<div class="row">
+    @foreach (Type type in PartageMvc.Web.Core.ContentType.GetListAvailable())
+    {
+        <div class="col-lg-6 item-type">
+            <h4>@PartageMvc.Web.Core.ContentType.GetName(type)</h4>
+            <p>@PartageMvc.Web.Core.ContentType.GetDescription(type)</p>
+            <a href="@Url.Action("Create", "ContentType", new { type = @PartageMvc.Web.Core.ContentType.GetKey(type) })" class="btn btn-default">Partager</a>
+        </div>
+    }
+</div>

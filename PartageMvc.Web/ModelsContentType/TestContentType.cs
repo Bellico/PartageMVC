@@ -1,25 +1,22 @@
-﻿using PartageMvc.Web.Behaviors;
+﻿using PartageMvc.Web.Manager;
 using PartageMvc.Web.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace PartageMvc.Web.ModelsContentType
 {
-    [ContentType (Key = "test")]
+    [ContentType(Key = "test", Name = "TestContent", CreateView = "TestContent.View", Description = "Creer un contenu de test pour tester")]
     public class TestContentType : ContentType, IContentType
     {
          public string Test { get; set; }
 
-         public IContentBehavior GetManager()
+         public IContentManager GetManager()
          {
-             return new TestContentTypeBehavior();
+             return new TestContentTypeManager(this);
          }
 
-         public string GetViewContent()
+         public void SetContainer(Models.Container container)
          {
-             return "TestContentView";
+             this.Container = container;
          }
     }
 }

@@ -4,7 +4,8 @@ namespace PartageMvc.Web.Core
 {
     public interface IContentType
     {
-        IContentBehavior GetManager();
-        string GetViewContent();
+        IContentManager GetManager();
+
+        void SetContainer(Container container);
     }
 }

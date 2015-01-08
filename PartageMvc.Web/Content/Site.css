@@ -34,3 +34,7 @@ textarea {
 .container h1{
     text-align: center;
 }
+
+.item-type{
+    margin : 10px 0;
+}

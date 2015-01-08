@@ -1,0 +1,8 @@
+﻿@model PartageMvc.Web.Models.Container
+
+<section>
+
+    <h1> Name : @Model.Name</h1>
+    <p>Lien : <a href="@Url.Action("DisplayContent", "ContentType", new { link = @Model.Link }) ">@Url.Action("DisplayContent", "ContentType", new { link = @Model.Link }, "http")</a> </p>
+
+</section>

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace PartageMvc.Web.Core
 {
@@ -9,5 +6,8 @@ namespace PartageMvc.Web.Core
     {
         public string Key { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
+        public string CreateView { get; set; }
+        public string DisplayView { get; set; }
     }
 }

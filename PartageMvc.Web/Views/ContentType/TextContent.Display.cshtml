@@ -1,0 +1,19 @@
+﻿@model PartageMvc.Web.ModelsContentType.TextContentType
+
+@{
+    ViewBag.Title = "Display";
+}
+
+@Html.Partial("_summary", @Model.Container)
+
+<div class="container small">
+
+    <div class="jumbotron">
+
+        <div class="contentType">
+            @Model.Text
+        </div>
+
+    </div>
+
+</div>

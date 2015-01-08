@@ -1,33 +1,30 @@
-﻿using PartageMvc.Web.Behaviors;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using PartageMvc.Web.Core;
-using System;
-using System.Collections.Generic;
+using PartageMvc.Web.Manager;
+using PartageMvc.Web.Models;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace PartageMvc.Web.ModelsContentType
 {
-    [ContentType (Key = "text", Name = "Texte")]
+    [ContentType(Key = "text", Name = "Texte", CreateView = "TextContent.Create", DisplayView = "TextContent.Display", Description = "Un simple Texte à partager")]
     public class TextContentType : ContentType, IContentType
     {
         [Display(Name = "Texte")]
         [Required]
         public string Text { get; set; }
 
-        [NotMapped]
-        private IContentBehavior Manager = new TextContentTypeBehavior(); 
+        //[NotMapped]
+        //private IContentBehavior Manager = new TextContentTypeBehavior(); 
 
-        public IContentBehavior GetManager()
+        public IContentManager GetManager()
         {
-            return Manager;
+            return new TextContentTypeManager(this); 
         }
 
-        public string GetViewContent()
+        public void SetContainer(Container container)
         {
-            return "TextContentView";
+            this.Container = container;
         }
-
     }
 }

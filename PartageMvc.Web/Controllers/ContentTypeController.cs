@@ -1,11 +1,9 @@
 ﻿using PartageMvc.Web.Core;
 using PartageMvc.Web.Models;
-using PartageMvc.Web.ModelsContentType;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace PartageMvc.Web.Controllers
@@ -17,12 +15,12 @@ namespace PartageMvc.Web.Controllers
         {
             IContentType contentType;
 
-            if (type == null) contentType = ContentTypeProvider.Default();
+            if (type == null) contentType = ContentType.Default();
             else
             {
                 try
                 {
-                    contentType = ContentTypeProvider.GetContentType(type);
+                    contentType = ContentType.GetContentType(type);
                 }
                 catch (IndexOutOfRangeException)
                 {
@@ -30,30 +28,52 @@ namespace PartageMvc.Web.Controllers
                 }
             }
 
-            return View(contentType.GetViewContent());
+            return View(ContentType.GetCreateView(contentType));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Create")]
-        public ActionResult PostCreate(string type)
+        [Route("Create", Name = "Create")]
+        public async Task<ActionResult> PostCreate(string type)
         {
             if (type == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             try
             {
-                var contentType = ContentTypeProvider.GetContentType(type);
-                ContentTypeProvider.Bind(contentType, Request.Form);
+                var contentType = ContentType.GetContentType(type);
+                ContentType.Bind(contentType, Request.Form);
                 ModelState.Clear();
                 TryValidateModel(contentType);
+
                 if (ModelState.IsValid)
                 {
-                    contentType.GetManager().Create();
+                    Container container = await contentType.GetManager().CreateAsync();
+                    return RedirectToAction("DisplayContent", new { link = container.Link });
                 }
-                return View(contentType.GetViewContent());
+                else
+                {
+                    return View(ContentType.GetCreateView(contentType));
+                }
             }
             catch (IndexOutOfRangeException)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [Route("View/{link}")]
+        public ActionResult DisplayContent(string link)
+        {
+            if (link == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            using (var db = new ApplicationDbContext())
+            {
+                Container container = db.Container.Where(c => c.Link == link).FirstOrDefault();
+                if (container == null)
+                {
+                    return HttpNotFound();
+                }
+                var contentType = ContentType.GetContentType(container);
+
+                return View(ContentType.GetDisplayView(contentType), contentType);
             }
         }
     }

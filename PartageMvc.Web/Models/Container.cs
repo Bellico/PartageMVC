@@ -1,35 +1,16 @@
-﻿using System.Data.Entity;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System.ComponentModel.DataAnnotations;
+﻿using PartageMvc.Web.Core;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PartageMvc.Web.Models
 {
-
     public class Container
     {
-        public Container()
-        {
-            //create link
-
-            this.DataContentId = 1;
-            this.ContentType = 1;
-            this.Link = "lien test";
-            this.Visibility = 1;
-
-            this.DateOnline = DateTime.Now;
-        //    this.DateExpire = DateTime.Now;
-             
-        }
-
         public int Id { get; set; }
 
         [Required]
-        public int DataContentId { get; set; }
+        public string DataContentId { get; set; }
 
         [MaxLength(255)]
         public string Name { get; set; }
@@ -40,7 +21,7 @@ namespace PartageMvc.Web.Models
         public string Link { get; set; }
 
         [Required]
-        public int ContentType { get; set; }
+        public string ContentType { get; set; }
 
         [Column("UserId")]
         public ApplicationUser User { get; set; }
@@ -53,6 +34,16 @@ namespace PartageMvc.Web.Models
 
         public DateTime? DateExpire { get; set; }
 
+        public static Container Create(string dataContentId, IContentType type)
+        {
+            return new Container
+            {
+                DataContentId = dataContentId,
+                Visibility = 1,
+                DateOnline = DateTime.Now,
+                ContentType = PartageMvc.Web.Core.ContentType.GetKey(type),
+                Link = Guid.NewGuid().ToString("N")
+            };
+        }
     }
-
 }

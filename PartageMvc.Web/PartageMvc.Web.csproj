@@ -40,6 +40,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -158,16 +164,15 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Behaviors\TestContentTypeBehavior.cs" />
-    <Compile Include="Behaviors\TextContentTypeBehavior.cs" />
+    <Compile Include="Managers\TestContentTypeManager.cs" />
+    <Compile Include="Managers\TextContentTypeManager.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ContainersAsyncController.cs" />
-    <Compile Include="Controllers\ContainersController.cs" />
     <Compile Include="Controllers\ContentTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Core\ContentTypeAttribute.cs" />
-    <Compile Include="Core\ContentTypeModelBinder.cs" />
     <Compile Include="Core\IContentType.cs" />
+    <Compile Include="Core\MongoRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -183,19 +188,17 @@
     <Compile Include="ModelsContentType\TestContentType.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Container.cs" />
-    <Compile Include="Core\IContentBehavior.cs" />
+    <Compile Include="Core\IContentManager.cs" />
     <Compile Include="Core\ContentType.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ModelsContentType\TextContentType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\ContentTypeProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
@@ -236,16 +239,16 @@
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\ContentType\TextContentView.cshtml" />
-    <Content Include="Views\ContentType\TestContentView.cshtml" />
+    <Content Include="Views\ContentType\TextContent.Create.cshtml" />
+    <Content Include="Views\ContentType\TestContent.View.cshtml" />
+    <Content Include="Views\ContentType\TextContent.Display.cshtml" />
+    <Content Include="Views\Shared\_ListTypeAvailable.cshtml" />
+    <Content Include="Views\Shared\_Summary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

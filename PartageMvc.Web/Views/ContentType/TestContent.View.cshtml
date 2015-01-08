@@ -1,0 +1,32 @@
+﻿@model PartageMvc.Web.ModelsContentType.TestContentType
+
+@{
+    ViewBag.Title = "Créer un contenu";
+}
+
+
+<div class="starter-template text-center">
+    <h1>@ViewBag.Title</h1>
+    <p class="lead">Ajoutez ici, un nouveau contenu à partager, ou choisissez un nouveau type de contenu</p>
+</div>
+
+<div class="container small">
+
+    <div class="jumbotron">
+        <h2>Nouveau contenu</h2>
+        <p class="bg-info"><span class="label label-info">Contenu Type TEST</span></p>
+
+        @using (Html.BeginForm("PostCreate", "ContentType"))
+        {
+            @Html.AntiForgeryToken()
+            <fieldset>
+                @Html.EditorFor(m => m.Test)
+                @Html.Hidden("Type", "test")
+            </fieldset>
+            <button type="submit" class="btn btn-lg btn-success">Ajouter</button>
+        }
+    </div>
+
+    @Html.Partial("_ListTypeAvailable")
+
+</div>
